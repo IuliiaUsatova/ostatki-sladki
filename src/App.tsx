@@ -1,7 +1,7 @@
+import AppRouter from './app/router/AppRouter'
+
 function App() {
-  return (
-    <h1>Остатки Сладки</h1>
-  )
+  return <AppRouter />
 }
 
 export default App
