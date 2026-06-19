@@ -1,73 +1,150 @@
-# React + TypeScript + Vite
+# Ostatki Sladki
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Early-stage FoodTech product for selling unsold restaurant food with dynamic discounts.
 
-Currently, two official plugins are available:
+The project is currently in active development. At this stage, the focus is on product architecture, role-based flows, authentication state, and the foundation for future pricing and inventory logic.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Product Idea
 
-## React Compiler
+Restaurants often have unsold food at the end of the day. Customers want affordable ready-to-eat meals, while restaurants want to reduce waste and recover part of the cost.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Ostatki Sladki explores a marketplace-style flow where:
 
-## Expanding the ESLint configuration
+- cafes can publish food offers with time-sensitive discounts;
+- buyers can discover discounted meals nearby;
+- admins can review cafe applications before allowing them to sell;
+- discount rules can later become dynamic based on time, stock, and demand.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Current Focus
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+The current implementation is intentionally small. It lays the foundation for:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- authentication flow;
+- role-based routing;
+- buyer / cafe / admin user roles;
+- cafe approval statuses;
+- application shell and route structure;
+- global auth state with Zustand.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Implemented So Far
+
+- React + TypeScript + Vite application setup.
+- App routing with React Router.
+- Basic route structure:
+  - splash/session check;
+  - login;
+  - registration;
+  - auth welcome;
+  - home;
+  - cafe pending review.
+- Auth store with Zustand:
+  - user id;
+  - email;
+  - role;
+  - cafe approval status;
+  - loading state;
+  - error state;
+  - auth reset/update actions.
+
+## Domain Model Draft
+
+```ts
+type UserRole = 'buyer' | 'cafe' | 'admin'
+type CafeStatus = 'pending' | 'approved' | 'rejected'
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+These states are important because the product is not a simple UI. It needs different flows for different users:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+new cafe -> registration -> pending review -> approved/rejected
+buyer -> onboarding -> offer discovery -> purchase flow
+admin -> cafe review -> moderation decisions
 ```
+
+## Planned Product Logic
+
+The future business logic will focus on:
+
+- cafe onboarding and approval workflow;
+- restaurant inventory/offers;
+- time-based discount rules;
+- buyer discovery and reservation flow;
+- admin moderation;
+- order lifecycle;
+- pricing rules for remaining food stock;
+- analytics for waste reduction and recovered revenue.
+
+## Planned Dynamic Pricing Direction
+
+The pricing model is expected to evolve from simple manual discounts to rules such as:
+
+```text
+base price
+  -> time left before pickup
+  -> remaining quantity
+  -> cafe-defined minimum price
+  -> demand/activity signals
+  -> final discounted price
+```
+
+The long-term goal is to make discount calculation transparent, predictable, and easy to adjust for cafe owners.
+
+## Tech Stack
+
+- React
+- TypeScript
+- Vite
+- React Router
+- Zustand
+- ESLint
+- Prettier
+
+## Project Structure
+
+```text
+src/app/router/          Application routes
+src/features/auth/store  Auth state and role/status model
+src/pages/               Product screens
+src/main.tsx             Application entry point
+```
+
+## Local Setup
+
+Install dependencies:
+
+```bash
+pnpm install
+```
+
+Run development server:
+
+```bash
+pnpm dev
+```
+
+Build:
+
+```bash
+pnpm build
+```
+
+Run formatting check:
+
+```bash
+pnpm format:check
+```
+
+## Why This Project Matters
+
+This project is my long-term product sandbox for practicing React, TypeScript, state management, product thinking, and business-rule design.
+
+The main interest is not only UI implementation, but the logic behind a real product: roles, workflows, approval states, inventory, pricing, and user scenarios.
+
+## Status
+
+Work in progress. The repository is public to show the product direction, architecture decisions, and incremental development process.
+
+## Author
+
+Iuliia Usatova  
+Frontend Engineer focused on fintech, business logic, internal tools, data-heavy interfaces, and AI-assisted engineering.
