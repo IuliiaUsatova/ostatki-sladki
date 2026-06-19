@@ -2,6 +2,8 @@
 
 Early-stage FoodTech product for selling unsold restaurant food with dynamic discounts.
 
+This is a joint product initiative with UX/UI designer Aleksandr Evstratenko. The goal is to explore a real commercial product opportunity for the local market, combining product research, user experience design, frontend architecture, and business-rule development.
+
 The project has recently been started and is currently at the foundation stage. At this stage, the focus is on product architecture, role-based flows, authentication state, and the foundation for future pricing and inventory logic.
 
 ## Project Stage
@@ -17,7 +19,7 @@ The most complex parts are intentionally planned as the next development stages:
 - order states and pickup scenarios;
 - analytics for food waste reduction and recovered revenue.
 
-The project is public at this early stage to show the direction, domain thinking, and incremental development process.
+The project is public at this early stage to show the direction, domain thinking, and incremental development process. It is not positioned as a finished application yet; it is the foundation of a potentially commercial product.
 
 ## Product Idea
 
@@ -151,9 +153,11 @@ pnpm format:check
 
 ## Why This Project Matters
 
-This project is my long-term product sandbox for practicing React, TypeScript, state management, product thinking, and business-rule design.
+This project is my long-term product and engineering sandbox for practicing React, TypeScript, state management, product thinking, and business-rule design in the context of a real market problem.
 
 The main interest is not only UI implementation, but the logic behind a real product: roles, workflows, approval states, inventory, pricing, and user scenarios.
+
+It also reflects the collaboration between engineering and UX/UI design: product research, user scenarios, interface decisions, and technical architecture are intended to evolve together.
 
 ## Status
 
