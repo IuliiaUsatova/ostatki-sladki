@@ -2,7 +2,22 @@
 
 Early-stage FoodTech product for selling unsold restaurant food with dynamic discounts.
 
-The project is currently in active development. At this stage, the focus is on product architecture, role-based flows, authentication state, and the foundation for future pricing and inventory logic.
+The project has recently been started and is currently at the foundation stage. At this stage, the focus is on product architecture, role-based flows, authentication state, and the foundation for future pricing and inventory logic.
+
+## Project Stage
+
+This is a large product idea, not a small UI demo. The repository currently shows the first implementation layer: application structure, routing, auth state, user roles, and cafe approval statuses.
+
+The most complex parts are intentionally planned as the next development stages:
+
+- restaurant inventory and offer lifecycle;
+- cafe onboarding and moderation workflow;
+- buyer discovery and reservation flow;
+- dynamic discount calculation;
+- order states and pickup scenarios;
+- analytics for food waste reduction and recovered revenue.
+
+The project is public at this early stage to show the direction, domain thinking, and incremental development process.
 
 ## Product Idea
 
