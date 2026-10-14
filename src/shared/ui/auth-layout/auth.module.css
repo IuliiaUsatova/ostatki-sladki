@@ -1,0 +1,172 @@
+.heading {
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 600;
+}
+.hero {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.field > span {
+  font-size: 12px;
+  line-height: 17px;
+  color: var(--muted);
+}
+.field input,
+.field textarea {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  color: var(--ink);
+  padding: 12px;
+}
+.field textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+.field input:focus,
+.field textarea:focus {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+.password {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.password input {
+  flex: 1;
+  min-width: 0;
+}
+.reveal {
+  color: var(--blue);
+  border: 1px solid var(--line);
+  background: white;
+  border-radius: 8px;
+  padding: 10px;
+  min-width: 44px;
+  min-height: 48px;
+  font-size: 12px;
+}
+.roles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.roles legend {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.roles label {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.roles label:has(input:checked) {
+  background: var(--blue-pale);
+  border-color: var(--blue);
+  color: var(--blue);
+}
+.roles input {
+  accent-color: var(--blue);
+  margin: 3px 0 0;
+}
+.help {
+  font-size: 12px;
+  line-height: 17px;
+  color: var(--muted);
+}
+.section {
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.footer {
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+  padding-top: 8px;
+}
+.footer a {
+  margin-left: 6px;
+  font-weight: 500;
+}
+.error {
+  border: 1px solid #e5a5ab;
+  border-radius: 12px;
+  padding: 12px;
+  color: var(--red);
+  font-size: 13px;
+  background: var(--red-pale);
+}
+.success {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  background: var(--blue-pale);
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 20px;
+}
+.textLink {
+  align-self: flex-start;
+  color: var(--blue);
+  font-size: 13px;
+  line-height: 20px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.emailAddress {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow-wrap: anywhere;
+}
+.emailAddress span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.verificationNotice {
+  margin-block: 12px;
+}
+.verificationNotice h2 {
+  font-size: 16px;
+}
+.verificationNotice p {
+  font-size: 13px;
+  line-height: 20px;
+  margin-block: 8px 12px;
+}
+.verificationNotice a {
+  max-width: 360px;
+}

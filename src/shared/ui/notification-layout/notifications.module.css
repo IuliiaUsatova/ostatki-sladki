@@ -1,0 +1,260 @@
+.intro {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 20px;
+}
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tabs button,
+.secondary,
+.primary {
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: white;
+  color: var(--ink);
+  font-size: 12px;
+}
+.tabs button[aria-pressed='true'] {
+  border-color: var(--blue);
+  background: var(--blue-pale);
+  color: var(--blue);
+}
+.primary {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: white;
+}
+.count {
+  color: var(--muted);
+  font-size: 12px;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.card {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.card[data-unread='true'] {
+  border-left: 3px solid var(--blue);
+  padding-left: 16px;
+}
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 11px;
+}
+.unread {
+  color: var(--blue);
+  font-weight: 600;
+}
+.card h2 {
+  font-size: 20px;
+  line-height: 26px;
+}
+.body {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 20px;
+}
+.snapshot {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.snapshot h3 {
+  font: 500 15px/21px var(--body-font);
+}
+.snapshot p,
+.snapshot dt,
+.snapshot dd {
+  font-size: 12px;
+  line-height: 18px;
+}
+.snapshot p {
+  color: var(--muted);
+}
+.facts {
+  margin: 8px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.facts > div {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: start;
+}
+.facts dt {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.facts dd {
+  margin: 0;
+  text-align: right;
+}
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.total strong {
+  color: var(--blue);
+  font-size: 15px;
+}
+.delivery {
+  color: var(--muted);
+  font-size: 11px;
+  padding-top: 4px;
+}
+.delivery[data-status='accepted'] {
+  color: var(--green);
+}
+.delivery[data-status='failed'] {
+  color: var(--red);
+}
+.empty {
+  padding: 28px 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  text-align: center;
+}
+.empty h2 {
+  margin-bottom: 8px;
+}
+.empty p {
+  color: var(--muted);
+  font-size: 13px;
+}
+.error,
+.success,
+.notice {
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 13px;
+  line-height: 20px;
+}
+.error {
+  color: var(--red);
+  background: var(--red-pale);
+}
+.success {
+  color: var(--green);
+  background: var(--green-pale);
+}
+.notice {
+  color: var(--ink);
+  background: var(--blue-pale);
+}
+.panel {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.panel h2 {
+  font-size: 18px;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+}
+.check input {
+  accent-color: var(--blue);
+  margin-top: 4px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+}
+.field select {
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  color: var(--ink);
+  min-height: 44px;
+  width: 100%;
+}
+.hint {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 18px;
+}
+.inboxLink {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--blue);
+  font-size: 13px;
+}
+.inboxLink > span:nth-last-child(2) {
+  flex: 1;
+}
+.counter {
+  background: var(--blue);
+  color: white;
+  border-radius: 18px;
+  padding: 2px 9px;
+  font-size: 11px;
+  min-width: 24px;
+  text-align: center;
+}
+.settingsLink {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+}
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}

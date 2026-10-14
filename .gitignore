@@ -11,6 +11,15 @@ node_modules
 dist
 dist-ssr
 *.local
+.env*
+!.env.example
+*.sqlite*
+*.db
+.next/
+data/
+*.tsbuildinfo
+next-env.d.ts
+qa/
 
 # Editor directories and files
 .vscode/*
