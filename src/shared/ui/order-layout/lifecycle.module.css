@@ -1,0 +1,205 @@
+.panel {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: white;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.panel h2 {
+  font-size: 20px;
+  line-height: 26px;
+}
+.hint {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 18px;
+}
+.form,
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.fields {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+}
+.field textarea,
+.field select {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  color: var(--ink);
+  background: white;
+}
+.field select {
+  min-height: 44px;
+}
+.field textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.primary,
+.secondary,
+.danger {
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: white;
+  color: var(--ink);
+  font-size: 13px;
+  text-align: center;
+}
+.primary {
+  border-color: var(--blue);
+  background: var(--blue);
+  color: white;
+}
+.danger {
+  border-color: var(--red);
+  color: var(--red);
+  background: var(--red-pale);
+}
+.notice,
+.error,
+.success {
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 20px;
+}
+.notice {
+  background: var(--blue-pale);
+}
+.notice p + p {
+  margin-top: 8px;
+}
+.error {
+  color: var(--red);
+  background: var(--red-pale);
+}
+.success {
+  color: var(--green);
+  background: var(--green-pale);
+}
+.status {
+  align-self: flex-start;
+  padding: 3px 10px;
+  font-size: 11px;
+  color: var(--blue);
+  background: var(--blue-pale);
+  border-radius: 20px;
+}
+.status[data-status='resolved'] {
+  color: var(--green);
+  background: var(--green-pale);
+}
+.messages {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 12px;
+}
+.message {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+}
+.message[data-role='cafe'] {
+  background: var(--blue-pale);
+}
+.message[data-role='admin'] {
+  background: var(--blue-pale);
+  border-left: 3px solid var(--blue);
+}
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 11px;
+  margin-bottom: 8px;
+}
+.messageBody,
+.note {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.cancellation {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.cancellation h2 {
+  font-size: 18px;
+}
+.history {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.history li {
+  border-left: 2px solid var(--line);
+  padding-left: 14px;
+}
+.history strong {
+  font-size: 13px;
+  font-weight: 500;
+}
+.history p {
+  color: var(--muted);
+  font-size: 11px;
+}
+.dialog {
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100svh - 40px);
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+  color: var(--ink);
+  background: white;
+}
+.dialog::backdrop {
+  background: #10202dbb;
+}
+.dialog h2 {
+  font-size: 22px;
+  line-height: 28px;
+}
+@media (max-width: 480px) {
+  .actions > button {
+    width: 100%;
+  }
+  .dialog {
+    padding: 18px;
+  }
+}

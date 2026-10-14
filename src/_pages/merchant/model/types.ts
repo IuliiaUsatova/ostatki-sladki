@@ -1,0 +1,15 @@
+export type Tab =
+  | 'today'
+  | 'offers'
+  | 'orders'
+  | 'pickup'
+  | 'application'
+  | 'cafeProfile'
+export type Filter =
+  | 'all'
+  | 'confirmed'
+  | 'collected'
+  | 'cancelled'
+  | 'not_collected'
+  | 'reserved'
+  | 'needs_reply'

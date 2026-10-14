@@ -1,0 +1,22 @@
+.status {
+  display: inline-block;
+  border-radius: 6px;
+  padding: 4px 8px;
+  color: #0055b3;
+  background: #edf6fe;
+  font:
+    400 12px/18px Inter,
+    sans-serif;
+}
+.status[data-status='new'] {
+  color: #86600a;
+  background: #fff7df;
+}
+.status[data-status='waiting'] {
+  color: #596879;
+  background: #f0f3f6;
+}
+.status[data-status='resolved'] {
+  color: #23734d;
+  background: #edf8f1;
+}

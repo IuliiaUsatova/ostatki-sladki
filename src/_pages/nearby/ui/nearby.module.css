@@ -1,0 +1,322 @@
+.intro {
+  display: grid;
+  gap: 8px;
+  padding: 8px 0 4px;
+}
+.intro h2 {
+  font-size: 25px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+}
+.intro > p:last-child {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  max-width: 38ch;
+}
+.eyebrow {
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+.filters,
+.field,
+.radius {
+  display: grid;
+  gap: 6px;
+}
+.filters {
+  gap: 12px;
+}
+.field > span,
+.radius > span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.field input,
+.field select,
+.radius select {
+  border: 1px solid var(--line);
+  background: white;
+  color: var(--ink);
+  border-radius: 8px;
+  min-height: 44px;
+  padding: 9px 10px;
+  min-width: 0;
+  width: 100%;
+}
+.searchRow {
+  display: flex;
+  gap: 8px;
+}
+.searchRow input {
+  flex: 1;
+}
+.primary,
+.secondary,
+.textButton {
+  border: 0;
+  min-height: 44px;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.4;
+  font-weight: 600;
+}
+.primary {
+  background: var(--blue);
+  color: white;
+}
+.secondary {
+  background: var(--blue-pale);
+  color: var(--blue);
+}
+.textButton {
+  background: none;
+  color: var(--blue);
+  text-align: left;
+  padding-left: 0;
+  width: fit-content;
+}
+.mapSection {
+  display: grid;
+  gap: 10px;
+  padding-top: 4px;
+}
+.mapTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.mapTop > p {
+  font-weight: 600;
+  font-size: 13px;
+}
+.mapTop > button {
+  max-width: 52%;
+}
+.areaTools {
+  display: grid;
+  grid-template-columns: minmax(100px, 1fr) minmax(130px, 1.2fr);
+  align-items: end;
+  gap: 12px;
+}
+.hint {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.privacy {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+.privacy summary {
+  cursor: pointer;
+  min-height: 32px;
+}
+.privacy p {
+  padding: 4px 0 8px;
+}
+.warning {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  background: var(--amber-pale);
+  color: var(--amber);
+  border-left: 3px solid #b88c24;
+  border-radius: 4px;
+  padding: 12px;
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.results {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+.results[hidden] {
+  display: none;
+}
+.resultHeading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 5px 12px;
+  padding-top: 4px;
+}
+.resultHeading h2 {
+  font-size: 17px;
+  font-weight: 600;
+}
+.resultHeading > span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.loading {
+  display: grid;
+  gap: 12px;
+}
+.loading > div {
+  border-radius: 10px;
+  background: var(--paper);
+  height: 130px;
+}
+.empty {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  padding: 16px 0;
+}
+.empty h3 {
+  font-size: 15px;
+}
+.empty p {
+  font-size: 12px;
+  color: var(--muted);
+}
+.venueCard {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: white;
+  scroll-margin: 16px;
+  min-width: 0;
+}
+.venueCard.selected {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 2px var(--blue-pale);
+}
+.venueHeading {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  justify-content: space-between;
+}
+.venueHeading > div {
+  min-width: 0;
+}
+.venueHeading h3 {
+  font-size: 17px;
+  line-height: 1.3;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.venueHeading h3 a {
+  color: var(--ink);
+}
+.address {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.distance {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--blue);
+  margin-top: 4px;
+}
+.mapButton {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  color: var(--blue);
+}
+.mapButton[aria-pressed='true'] {
+  background: var(--blue-pale);
+  border-color: var(--blue);
+}
+.offerList {
+  display: grid;
+  gap: 12px;
+}
+.offer {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 4px 10px;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  color: var(--ink);
+}
+.offer img {
+  width: 64px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 6px;
+  grid-row: span 2;
+}
+.offer h4 {
+  margin: 2px 0 5px;
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.offer p {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+.offer > strong {
+  color: var(--blue);
+  font-size: 15px;
+}
+.kind {
+  font-size: 10px;
+  color: var(--muted);
+}
+.venueLink {
+  justify-self: start;
+  font-size: 12px;
+  line-height: 24px;
+}
+.venueLink span {
+  margin-left: 4px;
+}
+.noOffers {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.unlocated {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  display: grid;
+  gap: 10px;
+}
+.unlocatedToggle {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: baseline;
+  padding: 8px 0;
+  min-height: 44px;
+  text-align: left;
+  color: var(--ink);
+  background: none;
+  border: 0;
+}
+.unlocatedToggle > span:first-child {
+  font-weight: 600;
+  font-size: 13px;
+}
+.unlocatedToggle > span:last-child {
+  color: var(--blue);
+  font-size: 11px;
+  flex-shrink: 0;
+}
