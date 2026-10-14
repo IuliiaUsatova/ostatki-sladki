@@ -1,161 +1,187 @@
-# Ostatki Sladki / Остатки сладки
+<div align="center">
 
-A food-rescue marketplace for discounted meals and surprise bags from cafés in Almaty. Buyers reserve food and collect it within a pickup window; cafés manage availability and confirm handoff.
+# Ostatki Sladki
 
-The product began as a joint initiative with UX/UI designer Aleksandr Evstratenko. The application follows the [Figma designs](https://www.figma.com/design/8FZnmYn4ihOn7q1eHQxxfH?node-id=2010-526).
+### Good food. Another chance.
 
-## Working features
+A full-stack food-rescue marketplace connecting local cafés with people looking for discounted meals and surprise bags.
 
-- Email/password registration and sign-in for buyers and café owners; durable accounts and revocable cookie sessions.
-- Mailbox confirmation and password recovery with one-time email links; localized transactional email through Brevo.
-- Café application, owner corrections and resubmission; administrator approval, rejection, change requests and suspension.
-- Revision checks, application snapshots and a moderation audit trail with messages in Russian, Kazakh and English.
-- Catalogue, search, meal/bag filters, venue discovery, guarantees and allergen information.
-- Atomic five-minute reservations, confirmation with payment at pickup, order history and cancellation.
-- Café cancellation with a recorded reason and automatic offer pause; automatic completion of uncollected bookings at the original pickup deadline.
-- Private order conversations between buyer and café owner, with replies, revision-checked buyer resolution and reopening.
-- Order support requests and complaints, with an administrator queue, assignment, revision-checked actions, decisions in all three languages and a shared history.
-- Nearby café map with moderated pickup points, explicit geolocation, distance/radius search and a fallback list for cafés without coordinates.
-- Café stock/price/window edits, pause/resume, multilingual offer creation and collection by a six-digit code.
-- Owner photo uploads, cover/gallery ordering and a public café page with three-language descriptions, collection instructions, weekly hours and current offers.
-- Profile changes return the café to moderation; administrators review the photos, translations, hours and immutable submission versions before approval.
-- Private buyer/café notifications for confirmed, cancelled and collected bookings; unread filtering, pagination and read markers.
-- Persistent order-email jobs and background pickup reminders, with per-account email opt-out and RU/KK/EN email language.
-- Server checks of identity, role, venue, ownership, approval, stock and pickup windows.
-- Complete RU/KK/EN interface. English is the initial language; the language choice persists.
+**Next.js 16 · React 19 · TypeScript · Node.js 24 · SQLite**
 
-Payment at pickup is the current booking model. Online payment, settlement and refunds are not implemented. Confirmation creates a booking and pickup code; it does not record a successful payment.
+**English · Қазақша · Русский**
 
-## Run
+[Explore the complete case study](docs/portfolio-case.md) · [Architecture](docs/architecture.md) · [Verification](docs/verification.md)
 
-Requires Node.js 24 and pnpm. The app and API run in the same Next.js project.
+![Ostatki Sladki — buyer, café and administrator workspaces](docs/portfolio/cover.jpg)
+
+</div>
+
+## The product
+
+Unsold food is time-sensitive inventory. A useful marketplace has to coordinate availability, booking deadlines, pickup, café approval and the people handling a problem after an order.
+
+Ostatki Sladki covers that entire journey: a buyer finds a meal or surprise bag, reserves it and collects it at the café; the café manages its offers and handoff; an administrator reviews venues and resolves order-related support cases. These workspaces share a working Node backend and persistent storage.
+
+The product began as a joint initiative with UX/UI designer **Aleksandr Evstratenko**. The application follows the [original Figma designs](https://www.figma.com/design/8FZnmYn4ihOn7q1eHQxxfH?node-id=2010-526) and extends them into complete operational flows. **Iuliia Usatova** implemented the frontend, backend, localization and automated verification.
+
+## Three roles, one connected workflow
+
+| Buyer                                              | Café owner                                             | Administrator                                              |
+| -------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------- |
+| Discover meals, surprise bags and nearby cafés     | Apply, correct an application and submit it for review | Review the exact submitted café revision                   |
+| Read allergens, guarantees and pickup instructions | Edit RU/KK/EN offers, price, stock and pickup windows  | Request changes, approve, reject or suspend a venue        |
+| Reserve for up to five minutes, then confirm       | Upload photos and maintain the public café page        | Inspect photos, translations, hours and review history     |
+| Collect using a private six-digit pickup code      | Look up the code and explicitly confirm handoff        | Claim support cases, reply and record a decision           |
+| Follow order history, messages and notifications   | Handle cancellations and buyer conversations           | Keep multilingual explanations and a shared action history |
+
+Payment is due **at pickup**. Booking confirmation does not charge a card; online payments, settlement and refunds are separate future work.
+
+## Inside the application
+
+The complete [visual walkthrough](docs/portfolio-case.md) includes **24 English screenshots and eight storyboards**, following discovery → reservation → pickup → support, then café operations and administrator review. All screenshots use fictional account and venue data.
+
+| Discover food                                                                             | Understand the offer                                                                          |
+| ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| ![English catalogue with meal and surprise-bag offers](docs/portfolio/buyer-discover.jpg) | ![Offer details with price, allergens and pickup information](docs/portfolio/buyer-offer.jpg) |
+| Buyers can search and filter offers, or explore approved nearby cafés.                    | The offer explains what is guaranteed and when collection is available.                       |
+
+| Confirm a booking                                                                          | Run the café                                                                     |
+| ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- |
+| ![Reservation confirmation and payment-at-pickup terms](docs/portfolio/buyer-checkout.jpg) | ![Café workspace with offers and bookings](docs/portfolio/merchant-overview.jpg) |
+| A temporary hold protects stock while the buyer confirms.                                  | Owners manage availability, bookings and outstanding conversations.              |
+
+| Moderate a venue                                                                                         | Resolve an order problem                                                                               |
+| -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| ![Administrator café moderation with submitted profile information](docs/portfolio/admin-moderation.jpg) | ![Administrator support case with multilingual decision and history](docs/portfolio/admin-support.jpg) |
+| Approval applies to a specific submission, including its photos and translations.                        | Assignment, replies and decisions remain visible in the case history.                                  |
+
+## Engineering decisions
+
+| Problem                                             | Implementation                                                                                                                                            |
+| --------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Two buyers want the last item                       | SQLite checks capacity and reserves it for up to five minutes in one transaction, capped by the pickup deadline.                                          |
+| A request succeeds, but its response is lost        | Keyed actions save the original payload and attempt key before sending. Matching retries replay the recorded result rather than create another operation. |
+| A café changes an offer after booking               | Orders retain immutable prices, translations, address, allergens, guarantees and pickup windows.                                                          |
+| An owner edits a profile while it is being reviewed | Moderation checks the submission revision. A stale decision cannot approve a newer profile.                                                               |
+| A page needs the same data in several places        | Concurrent subscribers share only an in-flight GET. Writes invalidate pending reads; completed data is not retained in a hidden global cache.             |
+| A reminder must run without an open browser         | A supervised Node worker processes durable reminder and order-email jobs every 15 seconds.                                                                |
+| Uploaded photos must respect venue and order access | Sharp validates and normalizes images; private files are served through current authorization checks.                                                     |
+| A feature grows beyond one screen                   | FSD public entries and an AST-based dependency guard keep browser boundaries enforceable in CI.                                                           |
+
+The server applies current identity and role checks, mailbox requirements, ownership, stock and pickup-window rules to the relevant operations. TypeScript DTOs describe the contract; runtime validation and authorization enforce it.
+
+### Architecture
+
+The frontend uses **Feature-Sliced Design**. The backend is a **modular monolith** with focused use cases and a SQLite infrastructure layer. Single responsibility and narrow collaborator contracts keep rules, persistence and visual components separate without adding a generic CRUD framework.
+
+```text
+src/
+├── app/                         Next.js pages, layouts and HTTP route adapters
+├── _app/                        Application providers
+├── _pages/                      Screen composition and page controllers
+├── widgets/                     Composed café editor and order discussion
+├── features/                    Offer editing, collection, support, preferences
+├── entities/                    Offer, order, venue and notification presentation
+├── shared/                      Transport contracts, i18n, UI and browser utilities
+├── domain/                      Server validation and domain entry points
+└── server/
+    ├── modules/                 Authorization, sessions and marketplace use cases
+    └── infrastructure/sqlite/   Connection, migrations, queries and commands
+```
+
+Browser imports follow `_app → _pages → widgets → features → entities → shared`. Next.js adapters in `src/app` sit outside that chain. Peer slices cannot import each other; cross-slice consumers use public entries. The guard also checks type imports, cycles and browser imports of server-only code.
+
+Read [ADR 001](docs/adr/001-fsd-and-modular-backend.md) for the boundary choices, retry protocol and trade-offs. The initial React/Vite foundation is preserved in `legacy/vite`.
+
+### Localization
+
+English is the initial language; the selected language persists. RU/KK/EN covers the buyer, café and administrator interfaces, errors, transactional emails and moderation/support explanations. Café profiles and offers require all three content translations. Orders preserve those translations as part of their original terms; free-form conversations retain the author's language.
+
+Prices are in **KZT**. Instants are stored in UTC and displayed in **Asia/Almaty** time. Automated checks verify dictionary keys and placeholders across all three languages.
+
+## Run locally
+
+Use **Node.js 24** and **pnpm 11.9**. The web application and API run in the same project.
 
 ```sh
 pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open [http://localhost:3103](http://localhost:3103). For the production build locally:
+Open [localhost:3103](http://localhost:3103). Development enables fictional catalogue fixtures. New production and unconfigured standalone databases start empty; existing databases are preserved. Fixture pickup windows are set on first creation; café owners can edit an offer's window when it has expired.
+
+For a local production build, stop the development server first:
 
 ```sh
 pnpm build
 pnpm start
 ```
 
-Stop the development server before building/starting on the same port. Development polling avoids macOS watcher limits.
+`pnpm dev` and `pnpm start` supervise both Next.js and the notification worker. Stopping the command stops both. Running `next start` directly starts only the web process, so scheduled work will not run.
 
-Both `pnpm dev` and `pnpm start` supervise the Next.js server and a dedicated notification worker. The worker checks durable reminders and mail jobs every 15 seconds, including when nobody has a browser open. Stopping the command stops both processes. Running `next start` directly starts only the web process and does not start scheduled notification work. The supervisor accepts `--port` for isolated QA through `node scripts/run-app.mjs start --port 3104`; it inherits the selected database/provider configuration without printing it.
+### Accounts and administrator access
 
-## Administrator setup
+Register a buyer or café account at `/register`. Registration does not permit choosing an administrator role. Café applications remain pending until review; changes to an approved public profile start another review.
 
-1. Register your own account at `/register` and choose the buyer account type.
-2. Confirm your email from the delivered link. Sign in to the same account first, reopen the email link and use the confirmation button; sign in again after confirmation.
-3. From this project folder, grant the existing account administrator rights:
+To provision an administrator, first register a buyer account and confirm its email, then run this trusted local operation from the project folder:
 
 ```sh
 node scripts/grant-admin.ts --email YOUR_EMAIL
 ```
 
-4. Sign in again at `/login`. Existing sessions are revoked when privileges change. Verified administrator accounts use `/admin` for café moderation and `/admin/support` for order support.
+Sign in again after the grant: privilege changes revoke existing sessions. Verified administrators use `/admin` for café moderation and `/admin/support` for support. An administrator grant does not substitute for mailbox confirmation.
 
-Administrator rights cannot be chosen during registration or granted through a public HTTP endpoint. A trusted grant does not substitute for mailbox confirmation.
+### Email
 
-## Email setup and account recovery
-
-Brevo is the selected email provider. The app sends confirmation, reset and password-change messages in English, Kazakh or Russian. Configure a confirmed sender and API key privately with:
+Browsing and local startup work without a mail provider. Verification, password recovery and real order-email delivery require a confirmed **Brevo** sender and a privately configured API key:
 
 ```sh
 python3 scripts/setup-email.py
 ```
 
-The script prompts for the key with hidden input and saves private settings in `data/email-settings.json`, excluded from Git. Never paste the key, a password or an email capability link into chat or a bug report. See [email delivery setup](docs/email-delivery.md) for provider preparation and the real-inbox acceptance check.
+The script uses hidden key input and writes `data/email-settings.json`, excluded from Git. Keep credentials and email capability links out of commits and bug reports. Follow [email delivery setup](docs/email-delivery.md) for provider preparation and inbox checks.
 
-Registration remains saved if the first email cannot be submitted; the signed-in account can request another confirmation. Unverified users can browse and access their own existing work, but cannot create/confirm reservations, create/edit selling offers or access administrator moderation.
+Registration remains saved when its first email cannot be submitted. Unverified accounts can browse and access their existing work, but cannot create/confirm bookings, create/edit selling offers or enter administrator moderation. Confirmation and reset use expiring, single-use links and revoke existing sessions; neither signs the user in automatically.
 
-Confirmation links last 24 hours and require a signed-in account matching the link. Reset links last 30 minutes and set a new 15–128-character password with repeat confirmation. Each successful confirmation or reset invalidates other outstanding links and signs out all sessions. Reset also confirms ownership of the email; neither flow automatically signs the user in.
+Security-email submission belongs to the initiating request and requires an explicit retry after failure. Order emails use a separate persistent outbox with bounded retries. Provider acceptance and inbox delivery are distinct results.
 
-The configured recovery endpoint gives the same acknowledgement for unknown accounts, cooldowns and provider failures. An acknowledgement means the request was accepted, not that a message reached an inbox. Delivery is submitted once per eligible request; there is no background outbox or automatic mail retry. The owner completed real local confirmation and recovery through Brevo; public-hosted delivery links need their own check after deployment. See [verification](docs/verification.md).
+### Persistent data
 
-## Café onboarding
+The default database is `data/ostatki.sqlite`. Uploaded photographs live in its companion `data/ostatki.sqlite.photos` directory. Both are private, excluded from Git and must be preserved together.
 
-Register a café account with its name, address, description and business contact. The venue remains pending until an administrator reviews it. The owner can see reasons, correct the application and submit again. Changing approved venue information also starts a new review. A stale review cannot approve a newer submission.
+`OSTATKI_DATABASE_FILE` selects a separate database for isolated testing or a persistent volume. A public HTTPS deployment must also set the exact `OSTATKI_PUBLIC_ORIGIN`; forwarded headers do not define the trusted origin. See [storage and access rules](docs/venue-media.md) and [architecture](docs/architecture.md) before changing the deployment model.
 
-In the café workspace, the café page editor accepts descriptions and collection instructions in RU/KK/EN, seven days of opening hours and up to eight gallery photographs. The first photograph is the cover. The owner can upload JPEG, PNG or WebP files up to 6 MiB and choose uploaded photos for offers as well as the gallery. Uploading alone does not publish an image. A new profile submission returns the venue to pending review, hiding its public page and new sales until approval. Administrators can inspect all three translations, hours, photos and earlier submission snapshots. Approved café pages are available at `/venues/{id}` and linked from venue discovery and offer details.
-
-The server validates actual image content, rejects animated or oversized images, autorotates, resizes to fit 1920 × 1920 and encodes WebP without source metadata. The private upload library allows 40 photographs per venue; removing one from the gallery detaches it without destroying historical order or review references. See [café pages and photographs](docs/venue-media.md).
-
-Unapproved venues cannot publish or receive new confirmed bookings. Already confirmed bookings retain their terms and can still be fulfilled by their venue, including during suspension.
-
-## Order notifications
-
-`/notifications` is each account's private inbox. Confirmed, cancelled and collected bookings notify their buyer and café owner; five-minute holds do not create notification noise. The inbox shows original order translations and pickup terms, with links to the current authenticated order. The recipient can mark one or all existing messages read, filter unread messages and load older pages. `/profile` stores preferences for order email and its language. Buyer/café accounts must confirm their mailbox before enabling order emails. Turning these emails off leaves the in-app history available and does not disable security emails for confirmation/password recovery.
-
-A confirmed booking schedules a buyer reminder 30 minutes before the original pickup start. Cancelled or collected bookings cancel that reminder. A booking first confirmed at or after the reminder time does not receive a second immediate message. Restarting during a still-valid pickup window can catch up a scheduled reminder; restarting at or after its end skips it. Existing confirmed bookings can still receive reminders while the venue is suspended. A stopped server cannot run scheduled jobs.
-
-Café owners can cancel a confirmed booking with a reason before its original pickup end. This pauses the offer and notifies both parties without cancelling other confirmed bookings. After the original pickup end, the worker closes uncollected bookings and notifies the buyer and owner. Their quantities stay committed, and old pickup codes cannot be reused. Buyers can open an order conversation, receive a café reply, resolve it or reopen it. Either party can ask central support for help or submit a complaint from the same booking. See [order completion and conversations](docs/order-lifecycle.md).
-
-The order change, private notification, reminder schedule and email job commit together. Brevo acceptance is distinct from inbox delivery. Missing email configuration leaves jobs queued; temporary failures retry with bounded backoff and attempts. Queued messages retain their event language; updated preferences affect new events. Turning email off suppresses pending order mail, and current recipient/order state is rechecked before each send. See [order notifications](docs/order-notifications.md) for storage, retry and deployment boundaries.
-
-## Nearby discovery
-
-Café owners set a pickup entrance in their profile; location changes require a new moderation decision. `/nearby` shows approved points, searches names, addresses and localized offer titles, and computes real straight-line distances from an explicitly selected area or browser location. Unlocated cafés remain available in a separate address list. Search coordinates are transient and sent in a POST body. Maps use locally bundled Leaflet with OpenStreetMap tiles; addresses and list search work when maps are unavailable. See [nearby discovery](docs/nearby.md).
-
-## Order support
-
-`/admin/support` lists help requests and complaints, with status/type/assignment filters, search and paginated results. An administrator takes a case before replying or recording a decision. Decisions require an explanation in RU/KK/EN, and both order participants can see the conversation, outcome and action history. An active support case prevents the buyer from independently resolving that conversation. Further buyer messages or an explicit request for reconsideration can reopen a resolved case.
-
-Support uses current server-side roles and ownership; pickup staff cannot read the queue or order conversations. Administrator order details omit the pickup code. The 50-message conversation limit still allows escalation through the support history and permits a decision without adding another chat message. Support actions do not change stock, bookings, payments or café moderation. Case updates currently do not create support emails. See [support workflow and API](docs/support.md).
-
-## Stack and layout
-
-Next.js 16 App Router, React 19, TypeScript, plain CSS/CSS modules, native Node SQLite, self-hosted Inter/Roboto and local Figma assets.
-
-```text
-src/app/                       Next.js route adapters, layouts and HTTP endpoints
-src/_app/                      Locale/application providers
-src/_pages/                    Screen composition and page-specific controllers
-src/widgets/                   Reusable composed café editor and order discussion
-src/features/                  User actions: edit offer, collect, support, preferences
-src/entities/                  Offer/order/venue presentation and localized model helpers
-src/shared/                    Transport contracts, i18n, UI primitives and browser utilities
-src/domain/                    Server runtime validation and domain entry points
-src/server/modules/            Authz, sessions, buyer orders, merchant and offer use cases
-src/server/infrastructure/     SQLite connection, schema, migrations, queries and commands
-src/server/                    Composition, auth, moderation, support, media and background mail
-scripts/                       Local account provisioning, startup and architecture guard
-tests/                        Isolated business, security, concurrency and language checks
-docs/                         Architecture decisions, API/workflows and verification
-public/images, icons/          Local Figma assets
-legacy/vite/                   Preserved initial React/Vite foundation
-```
-
-See [FSD and server boundaries](docs/adr/001-fsd-and-modular-backend.md) for import rules, retry ownership and architectural trade-offs. The original `ROADMAP.md` is retained as the initial product plan.
-
-## Data and reliability
-
-The default database is `data/ostatki.sqlite`, excluded from Git. `OSTATKI_DATABASE_FILE` optionally chooses a separate database file for isolated QA or a persistent deployment volume. Browsing, registration and local development can run without an email provider; actual email delivery requires the private mail configuration.
-
-Passwords use salted, asynchronous scrypt; credentials, session tokens and raw email tokens are never returned in account DTOs. Email capabilities are stored as digests tied to their purpose, expiry and credential revision. Login/mail attempts and native hashing work are limited. Mutation routes require same-origin requests and bounded JSON bodies. Previous sample-persona sessions cannot authenticate real API requests.
-
-The server calculates prices and stock in SQLite transactions. Idempotency binds a retry to the actor and original payload. Orders keep immutable prices, addresses, windows, guarantees, allergens and all three translations. Time is stored in UTC and shown in Almaty time.
-
-New production databases start empty. Development/test startup enables fictional fixtures through `NODE_ENV`; standalone and production startup do not. Tests that need catalogue fixtures pass `seedFixtures: true` to the repository explicitly. Existing databases are preserved, so a previously populated local database must still be replaced or prepared deliberately before commercial use.
-
-When deploying behind an HTTPS reverse proxy, set `OSTATKI_PUBLIC_ORIGIN` to the exact public HTTPS origin. The server uses this fixed origin for mutation checks and secure cookies; forwarded headers cannot choose the trusted origin.
-
-## Verify
+## Verification
 
 ```sh
 pnpm check
 pnpm format:check
 ```
 
-The check runs the FSD dependency guard, strict TypeScript, ESLint, isolated tests and a production build. GitHub Actions repeats these checks and formatting on pushes and pull requests. The suite covers concurrent reservations, stock release, retries, exact time boundaries, ownership, credential validation, session rotation/revocation, email capability consumption, recovery, throttling, moderation revisions, suspension, support assignment/revisions/reopening, persistence and all UI language dictionaries. See [verification](docs/verification.md).
+`pnpm check` runs the architecture guard, strict TypeScript, ESLint, the Node test suite and a production build. GitHub Actions repeats these checks and formatting on pushes and pull requests.
 
-## Next release work
+The latest recorded verification passed **172 automated tests**, plus browser regression of offer editing, booking, pickup, café resubmission, moderation and support decisions in all three languages. Tests use isolated databases, explicit fixtures, injected clocks and mail transports.
 
-Online payments/refunds and email notifications for support remain separate features. The support queue records explanations and complaint outcomes; it does not perform financial settlement. Public deployment also needs HTTPS, the exact `OSTATKI_PUBLIC_ORIGIN`, a public inbox/link check, durable database and photo storage, backups and production data preparation. The web process and its notification worker share a persistent SQLite disk; this layout does not support stateless Workers or independent replicas unchanged.
+Coverage includes concurrent reservations, expiry boundaries, stock release, lost-response retries, role/ownership checks, session revocation, email capabilities, moderation revisions, private photo access, support assignment/reopening, background notifications and localization parity. See the [verification record](docs/verification.md#fsd-and-module-refactor-regression-2026-10-14) for the evidence and its limits.
 
-## Author
+## Technical reference
 
-Iuliia Usatova — frontend engineer focused on business logic, operational systems and full-stack product development.
+| Area                 | Documentation                                                                                    |
+| -------------------- | ------------------------------------------------------------------------------------------------ |
+| Architecture and FSD | [System boundaries](docs/architecture.md) · [ADR 001](docs/adr/001-fsd-and-modular-backend.md)   |
+| Accounts and cafés   | [Authentication and moderation](docs/auth-moderation.md) · [Email setup](docs/email-delivery.md) |
+| Booking and pickup   | [Order lifecycle and conversations](docs/order-lifecycle.md)                                     |
+| Support              | [Cases, assignment, decisions and HTTP contracts](docs/support.md)                               |
+| Media and discovery  | [Café pages and photographs](docs/venue-media.md) · [Nearby search](docs/nearby.md)              |
+| Background work      | [Notifications, reminders and email jobs](docs/order-notifications.md)                           |
+| Validation           | [Automated and browser checks](docs/verification.md)                                             |
+
+## Current boundaries
+
+This repository presents a working application through source code, local setup and a [complete screenshot case study](docs/portfolio-case.md). It is not currently publicly hosted.
+
+Online payments/refunds, support-email notifications and production backup operations remain release work. The Node web process and worker share a durable SQLite disk and private photo storage; stateless edge hosting or independent replicas require an architectural change. Public use also needs HTTPS, the trusted origin, clean venue data, coordinated backups and delivery/link checks against the final hostname.
+
+---
+
+**Built by [Iuliia Usatova](https://github.com/IuliiaUsatova)** — frontend engineering, full-stack workflows and operational product systems.

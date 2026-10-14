@@ -2,7 +2,7 @@
 
 Editable design: [Остатки — Figma](https://www.figma.com/design/8FZnmYn4ihOn7q1eHQxxfH?node-id=2010-526).
 
-The buyer shell, offer cards, detail, checkout, pickup ticket and order list follow nodes `2010:526`, `2010:715`, `2010:781`, `2010:910` and `2010:983`. Profile follows `2011:693`. Registration/sign-in follow `2011:967` and `2011:938`, with functional account types, password confirmation and café application fields. Provider buttons and password recovery are omitted until their services exist.
+The buyer shell, offer cards, detail, checkout, pickup ticket and order list follow nodes `2010:526`, `2010:715`, `2010:781`, `2010:910` and `2010:983`. Profile follows `2011:693`. Registration/sign-in follow `2011:967` and `2011:938`, with functional account types, password confirmation and café application fields. Email confirmation and password recovery extend the account flow in RU/KK/EN, with real transactional delivery through Brevo. Third-party sign-in provider buttons remain omitted.
 
 Merchant structure follows `2014:2022`, `2014:2158`, `2014:2371` and `2014:2298`. The original blue/white palette, Inter/Roboto typography, spacing and component sizes are adapted to responsive web layouts. The mobile operating-system status bar is excluded from the website.
 
